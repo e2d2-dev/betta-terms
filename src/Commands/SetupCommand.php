@@ -2,7 +2,7 @@
 
 namespace Betta\Terms\Commands;
 
-use Betta\Onboarding\Commands\Concerns\AskToStar;
+use Betta\Terms\Commands\Concerns\AskToStar;
 use Betta\Terms\Commands\Setup\InitializeTables;
 use Betta\Terms\Commands\Setup\AskToPublishConfig;
 use Betta\Terms\Commands\Setup\AskToPublishTranslations;
