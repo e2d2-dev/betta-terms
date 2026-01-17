@@ -5,15 +5,11 @@
 
 # Features
 
-- 🛡️ **Terms and Conditions Management**
-    - 📦 Panel Guard
-    - 📄 Model Guard
+- 📦 Panel Guard
+- 📄 Model Guard
 - 🔍 **Entity discovery** (panel & models)
 - 🌐 **Localized**
 - 🎨 **Intuitive & Responsive UI**
-
-<div class="filament-hidden">
-<b>Table of Contents</b>
 
 - [Installation](#installation)
     - [1. Install Package](#1-install-package)
@@ -71,8 +67,6 @@
 - [TODO](#todo)
 - [Credits](#credits)
 - [License](#license)
-
-</div>
 
 # Installation
 
@@ -545,12 +539,19 @@ or via the service provider:
 ```
 
 # Screenshots
+## Edit Condition
 ![Condition Edit](docs/condition-edit.png)
+## Consent Conditions Page
 ![Consent Conditions Page](docs/consent-conditions.png)
+## Consents Table
 ![Consents Table](docs/consents-list.png)
+## Guards Table
 ![Guards Table](docs/guards-list.png)
+## Edit Guard
 ![Guard Edit](docs/guard-edit.png)
+## Consent Component Compact Mode
 ![Preview Compact](docs/preview-compact.png)
+## Consent Component Regular Mode
 ![Preview Regular](docs/preview-regular.png)
 
 # TODO
