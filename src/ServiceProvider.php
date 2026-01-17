@@ -2,13 +2,21 @@
 
 namespace Betta\Terms;
 
+use Betta\Terms\Actions\Condition\ActivateSuccessor;
+use Betta\Terms\Actions\Condition\Replace;
 use Betta\Terms\Actions\Consent\Create;
 use Betta\Terms\Actions\Consent\CreatePersistent;
+use Betta\Terms\Actions\Model\ModelConsentSlug;
+use Betta\Terms\Actions\Model\UpdateConsentGuardConditions;
 use Betta\Terms\Commands\MakeConditionCommand;
 use Betta\Terms\Commands\MakeGuardCommand;
 use Betta\Terms\Commands\MakeModelCommand;
 use Betta\Terms\Commands\SetupCommand;
+use Betta\Terms\Contracts\ActivatesSuccessor;
+use Betta\Terms\Contracts\GeneratesModelConsentSlug;
+use Betta\Terms\Contracts\ReplacesCondition;
 use Betta\Terms\Contracts\CreateConsent;
+use Betta\Terms\Contracts\UpdatesConsentGuardConditions;
 use Betta\Terms\Filament\Auth\Register;
 use Betta\Terms\Models\Condition;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -65,6 +73,11 @@ class ServiceProvider extends BaseServiceProvider
 
             return new $action;
         });
+
+        $this->app->bind(ReplacesCondition::class, Replace::class);
+        $this->app->bind(ActivatesSuccessor::class, ActivateSuccessor::class);
+        $this->app->bind(UpdatesConsentGuardConditions::class, UpdateConsentGuardConditions::class);
+        $this->app->bind(GeneratesModelConsentSlug::class, ModelConsentSlug::class);
     }
 
     public function getViewPath(): string

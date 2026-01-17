@@ -3,13 +3,11 @@
 namespace Betta\Terms\Actions\Model;
 
 use Betta\Terms\Contracts\ModelConditions;
-use Lorisleiva\Actions\Concerns\AsAction;
+use Betta\Terms\Contracts\UpdatesConsentGuardConditions;
 
-class UpdateConsentGuardConditions
+class UpdateConsentGuardConditions implements UpdatesConsentGuardConditions
 {
-    use AsAction;
-
-    public function handle(ModelConditions $record, array $data): void
+    public function update(ModelConditions $record, array $data): void
     {
         $consent = ['consent' => array_unique(array_merge($record->getSavedGuardConditions('committed'), $data))];
 

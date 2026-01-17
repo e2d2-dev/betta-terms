@@ -2,7 +2,7 @@
 
 namespace Betta\Terms\Models\Condition;
 
-use Betta\Terms\Actions\Condition\Replace;
+use Betta\Terms\Contracts\ReplacesCondition;
 use Betta\Terms\Models\Condition;
 use Betta\Terms\Models\Condition\CanBeReplaced\CanBeObsolete;
 use Betta\Terms\Models\Condition\CanBeReplaced\HasPredecessor;
@@ -18,7 +18,7 @@ trait CanBeReplaced
 
     public function replace(): Condition
     {
-        return Replace::run($this);
+        return app(ReplacesCondition::class)->replace($this);
     }
 
     public function getPivotActive(): bool

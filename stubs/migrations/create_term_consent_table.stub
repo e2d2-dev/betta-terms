@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('term_consent', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->{$this->getUserKeyType()}('user_id');
             $table->unsignedBigInteger('condition_id');
             $table->string('signed_on')->nullable();
             $table->boolean('is_repeating')->nullable();
@@ -22,4 +22,11 @@ return new class extends Migration
     {
         Schema::dropIfExists('term_consent');
     }
+
+    public function getUserKeyType(): string
+    {
+        return match(\Betta\Terms\Terms::getUserModel()->getKeyType()) {
+            'int' => 'unsignedBigInteger',
+            'string' => 'string',
+        };}
 };

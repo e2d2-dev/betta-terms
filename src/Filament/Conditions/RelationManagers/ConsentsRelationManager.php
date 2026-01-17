@@ -64,7 +64,7 @@ class ConsentsRelationManager extends RelationManager
 
     public static function getTitle(Model $ownerRecord, string $pageClass): string
     {
-        return __('betta-terms::fields.consent.label');
+        return __('betta-terms::models.consent.plural');
     }
 
     /**

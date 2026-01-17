@@ -2,20 +2,19 @@
 
 namespace Betta\Terms\Actions\Condition;
 
+use Betta\Terms\Contracts\ReplacesCondition;
 use Betta\Terms\Models\Condition;
 use Betta\Terms\Terms;
-use Lorisleiva\Actions\Concerns\AsAction;
 
-class Replace
+class Replace implements ReplacesCondition
 {
-    use AsAction;
-
-    public function handle(Condition $condition): Condition
+    public function replace(Condition $condition): Condition
     {
         /** @var Condition $fresh */
         $fresh = Terms::getConditionModel()::create([
             'name' => $condition->name,
             'description' => $condition->description,
+            'revision' => $condition->revision + 1,
         ]);
 
         $condition->update([

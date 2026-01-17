@@ -2,16 +2,14 @@
 
 namespace Betta\Terms\Actions\Condition;
 
+use Betta\Terms\Contracts\ActivatesSuccessor;
 use Betta\Terms\Events\Condition\SuccessorActivated;
 use Betta\Terms\Models\Condition;
 use Betta\Terms\Models\ConditionGuard;
-use Lorisleiva\Actions\Concerns\AsAction;
 
-class ActivateSuccessor
+class ActivateSuccessor implements ActivatesSuccessor
 {
-    use AsAction;
-
-    public function handle(Condition $condition): void
+    public function activate(Condition $condition): void
     {
         if (! $condition->isSuccessor()) {
             return;

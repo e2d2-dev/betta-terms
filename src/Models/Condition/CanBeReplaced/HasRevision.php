@@ -29,7 +29,7 @@ trait HasRevision
 
     private function setRevision(): void
     {
-        $this->revision = $this->getRevisionNumber();
+        $this->revision = $this->revision ?? $this->getRevisionNumber();
     }
 
     public function getRevision(): int
@@ -46,7 +46,7 @@ trait HasRevision
 
     public function getFreshRevisionNumber(): int
     {
-        return $this->revision = $this->predecessor->revision + 1;
+        return $this->predecessor->revision + 1;
     }
 
     public function hasRevision(): bool

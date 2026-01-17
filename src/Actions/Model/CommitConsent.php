@@ -3,6 +3,7 @@
 namespace Betta\Terms\Actions\Model;
 
 use Betta\Terms\Contracts\CreateConsent;
+use Betta\Terms\Contracts\GeneratesModelConsentSlug;
 use Betta\Terms\Contracts\ModelConditions;
 use Betta\Terms\Models\Condition;
 use Betta\Terms\Models\Guard;
@@ -14,10 +15,9 @@ class CommitConsent
     {
         $guard = $record->consentGuard;
         $conditions = $this->filterConditions($guard, $record->getSavedGuardConditions('consent'));
-
-        $consentSlug = app(ModelConsentSlug::class);
-
         $committed = $record->getSavedGuardConditions('committed');
+
+        $consentSlug = app(GeneratesModelConsentSlug::class)->generate($record);
 
         /** @var Condition $condition */
         foreach ($conditions as $key => $condition) {

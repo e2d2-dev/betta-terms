@@ -1,3 +1,5 @@
+# Compatability: Filament 4.x / 5.0
+
 # Features
 
 - 🛡️ **Terms and Conditions Management**
@@ -136,8 +138,11 @@ If you want to have the conditions on your registrations form, add the Register 
 # Guards
 ## Guard Features
 #### Every guard can have multiple conditions
-- Conditions can be skippable
-- Order of conditions can be adjusted to your needs
+Conditions can be:
+- skippable -> not required
+- persistent -> will need consent every time / multiple times 
+- orderable
+  ![Reorder](docs/reorder.png)
 
 # Panel Guard
 Terms comes with a multi-panel guard. Each can have an own. 
@@ -544,7 +549,6 @@ or via the service provider:
 ![Guard Edit](docs/guard-edit.png)
 ![Preview Compact](docs/preview-compact.png)
 ![Preview Regular](docs/preview-regular.png)
-![Reorder](docs/reorder.png)
 
 # TODO
 - Disabling Sources & Components

@@ -5,6 +5,7 @@ namespace Betta\Terms\Filament\Conditions\RelationManagers;
 use BackedEnum;
 use Betta\Terms\Filament\Guards\Tables\Columns\DisplayNameColumn;
 use Betta\Terms\Filament\Guards\Tables\Columns\IsActiveToggleColumn;
+use Betta\Terms\Filament\Guards\Tables\Columns\IsPersistentToggleColumn;
 use Betta\Terms\Filament\Guards\Tables\Columns\IsSkippableToggleColumn;
 use Betta\Terms\Models\Condition;
 use Betta\Terms\Terms;
@@ -32,6 +33,7 @@ class GuardsRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 DisplayNameColumn::make()->grow(),
+                IsPersistentToggleColumn::make(),
                 IsSkippableToggleColumn::make(),
                 IsActiveToggleColumn::make(),
             ])

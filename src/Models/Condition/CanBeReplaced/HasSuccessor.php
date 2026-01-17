@@ -2,7 +2,7 @@
 
 namespace Betta\Terms\Models\Condition\CanBeReplaced;
 
-use Betta\Terms\Actions\Condition\ActivateSuccessor;
+use Betta\Terms\Contracts\ActivatesSuccessor;
 use Betta\Terms\Models\Condition;
 use Betta\Terms\Terms;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,7 +21,7 @@ trait HasSuccessor
 
     public function activateSuccessor(): void
     {
-        ActivateSuccessor::run($this);
+        app(ActivatesSuccessor::class)->activate($this);
     }
 
     public function hasSuccessor(): bool

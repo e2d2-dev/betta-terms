@@ -4,6 +4,7 @@ namespace Betta\Terms\Filament\Forms\Consent;
 
 use Betta\Terms\Actions\Model\UpdateConsentGuardConditions;
 use Betta\Terms\Contracts\ModelConditions;
+use Betta\Terms\Contracts\UpdatesConsentGuardConditions;
 use Betta\Terms\Models\Condition;
 use Illuminate\Support\Arr;
 
@@ -17,7 +18,7 @@ trait HasModelConditions
             return $condition['slug'];
         })->values()->toArray();
 
-        UpdateConsentGuardConditions::run($this->getRecord(), $conditions);
+        app(UpdatesConsentGuardConditions::class)->update($this->getRecord(), $conditions);
     }
 
     protected function getModelConsentedState(Condition $condition): Condition
