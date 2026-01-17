@@ -1,3 +1,5 @@
+![](logo.png)
+
 # Compatability: Filament 4.x / 5.0
 
 # Features
