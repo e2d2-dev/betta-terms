@@ -18,6 +18,11 @@ trait HasSession
         return $value ?? $default;
     }
 
+    public function dumpSession(): array
+    {
+        return session()->get($this->getSessionKey()) ?? [];
+    }
+
     public function session(string $key, mixed $value): static
     {
         session()->put("{$this->getSessionKey()}.{$key}", $value);

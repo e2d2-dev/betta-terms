@@ -11,7 +11,6 @@ use Betta\Terms\Terms;
 use Filament\Actions\AttachAction;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DetachAction;
-use Filament\Actions\EditAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
@@ -42,7 +41,7 @@ class GuardsRelationManager extends RelationManager
                     ->icon(Heroicon::ArrowsPointingIn)
                     ->preloadRecordSelect(),
             ])
-            ->recordUrl(fn($record) => Terms::getGuardResource()::getUrl('edit',['record' => $record]))
+            ->recordUrl(fn ($record) => Terms::getGuardResource()::getUrl('edit', ['record' => $record]))
             ->recordActions([
                 DetachAction::make()->iconButton()->icon(Heroicon::ArrowsPointingOut),
             ]);

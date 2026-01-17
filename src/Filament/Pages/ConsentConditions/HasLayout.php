@@ -9,6 +9,7 @@ use Illuminate\Contracts\Support\Htmlable;
 trait HasLayout
 {
     use ResolveClosure;
+
     protected static ?Closure $generateHeadingUsing = null;
 
     public static function isSimple(): bool

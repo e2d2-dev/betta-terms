@@ -16,7 +16,7 @@ trait HasConsentConditions
     {
         $user = $user ?: auth()->user();
 
-        return Terms::getModel('consent')::query()
+        return Terms::getConsentModel()::query()
             ->where('user_id', $user->getKey())
             ->select('condition_id')
             ->pluck('condition_id')

@@ -6,7 +6,6 @@ use Betta\Terms\Enums\Source;
 use Betta\Terms\Filament\Forms\Concerns\CanHaveConditionFromState;
 use Betta\Terms\Models\Condition;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Enums\TextSize;
 
 /**
  * @method Condition getRecord(bool $withDefault = true)

@@ -15,6 +15,9 @@ class PanelConsentGuard
             return $next($request);
         }
 
+        //        dd(
+        //            Terms::panelMustConsent()
+        //        );
         if (Terms::panelMustConsent() and ! Terms::onConsentUrl()) {
             Terms::intendedUrl($request->url());
 

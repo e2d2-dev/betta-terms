@@ -26,16 +26,19 @@ trait InitializeTables
 
         $this->info('Publishing migrations...');
 
-        foreach ($toMigrate as $table => $name) {
+        foreach ($toMigrate as $name => $table) {
 
             $stub = "create_{$table}_table.stub";
 
             $from = $this->getMigrationStubPath($stub);
-            $to = $this->getMigrationStoragePath($stub, true);
 
-            $content = File::get($from);
+            if (! $this->checkForExistingMigration($name, true)) {
+                $to = $this->getMigrationStoragePath($stub, true);
 
-            File::put($to, $content);
+                $content = File::get($from);
+
+                File::put($to, $content);
+            }
         }
 
         $this->askToRunMigrations();

@@ -4,7 +4,6 @@ namespace Betta\Terms\Relations;
 
 use Betta\Terms\Terms;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class HasModelGuard extends HasOne
@@ -28,7 +27,9 @@ class HasModelGuard extends HasOne
     {
         $query = $this->getRelationQuery();
 
-        $query->where('slug', $this->getParentClassSlug())->first();
+        $query->where('slug', $this->getParentClassSlug())
+            ->with('activeConditions')
+            ->first();
     }
 
     public function addEagerConstraints(array $models): void

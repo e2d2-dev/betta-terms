@@ -2,8 +2,8 @@
 
 namespace Betta\Terms\Filament\Conditions\RelationManagers;
 
-use Betta\Onboarding\Filament\Progress\Tables\Columns\EmailColumn;
 use Betta\Terms\Filament\Tables\Columns\CreatedColumn;
+use Betta\Terms\Filament\Tables\Columns\EmailColumn;
 use Betta\Terms\Filament\Tables\Columns\NameColumn;
 use Betta\Terms\Models\Condition;
 use Filament\Actions\BulkActionGroup;

@@ -5,7 +5,6 @@ namespace Betta\Terms\Filament\Guards\Schemas\Components;
 use Betta\Terms\Enums\GuardType;
 use Betta\Terms\Terms;
 use Filament\Forms\Components\Select;
-use Filament\Panel;
 
 class PanelSelect extends Select
 {

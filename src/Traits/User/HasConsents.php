@@ -2,16 +2,17 @@
 
 namespace Betta\Terms\Traits\User;
 
-use Betta\Terms\Actions\ConsentBySlug;
+use Betta\Terms\Contracts\CreateConsent;
+use Betta\Terms\Models\Condition;
 use Betta\Terms\Relations\ManyOpenConsents;
 use Betta\Terms\Relations\ManyOpenConsentsRelation;
 use Betta\Terms\Terms;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property Collection $consents
+ * @property Collection $openConsents
  */
 trait HasConsents
 {
@@ -19,18 +20,19 @@ trait HasConsents
 
     public function consents(): BelongsToMany
     {
-        return $this->belongsToMany(Terms::getModel('condition'), Terms::getTable('consent'))
+        return $this->belongsToMany(Terms::getConditionModel(), Terms::getTable('consent'))
             ->withTimestamps(updatedAt: false);
     }
 
     public function openConsents(): ManyOpenConsents
     {
-        return $this->manyOpenConsents(Terms::getModel('condition'));
+        return $this->manyOpenConsents(Terms::getConditionModel());
     }
 
-    public function consentBySlug(string $slug, ?string $signedOn = null): static
+    public function consentCondition(Condition $condition, ?string $signedOn = null): static
     {
-        ConsentBySlug::run($this, $slug, $signedOn);
+        $action = app(CreateConsent::class, ['condition' => $condition]);
+        $action->handle($this, $condition, $signedOn);
 
         return $this;
     }

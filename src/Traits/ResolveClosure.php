@@ -14,13 +14,13 @@ trait ResolveClosure
         $fn = new ReflectionFunction($callback);
 
         $resolved = [];
-        $resolvable = [...$this->getResolveAbleArguments(), ...$arguments ];
+        $resolvable = [...$this->getResolveAbleArguments(), ...$arguments];
 
         foreach ($fn->getParameters() as $parameter) {
             $name = $parameter->getName();
             $argument = $resolvable[$name] ?? null;
 
-            if(! $argument) {
+            if (! $argument) {
                 throw new InvalidArgumentException("{$name} could not be resolved.");
             }
             $resolved[] = $argument;

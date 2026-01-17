@@ -9,22 +9,25 @@ use Betta\Terms\Terms;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+
 use function Laravel\Prompts\search;
 
 class MakeModelCommand extends Command
 {
-    use MigrationStuff;
     use GuardStuff;
+    use MigrationStuff;
 
     protected $description = 'Creates a betta-terms model-guard migration';
 
     protected $name = 'make:terms-model';
 
     protected $signature = 'make:terms-model {--model=}';
-    protected string $model;
-    protected string $table;
-    protected string $column;
 
+    protected string $model;
+
+    protected string $table;
+
+    protected string $column;
 
     public function handle(): int
     {
@@ -33,9 +36,9 @@ class MakeModelCommand extends Command
 
         $this->askForModel();
 
-        if(! $this->askForColumn()) {
+        if (! $this->askForColumn()) {
             return static::FAILURE;
-        };
+        }
 
         $this->createMigration();
 
@@ -46,8 +49,9 @@ class MakeModelCommand extends Command
 
     protected function askToCreateGuard(): void
     {
-        if($this->guardExists(Terms::getModelSlug($this->model))) {
+        if ($this->guardExists(Terms::getModelSlug($this->model))) {
             $this->error('exiting...');
+
             return;
         }
 
@@ -77,9 +81,9 @@ class MakeModelCommand extends Command
 
         $this->line("Migration name: <fg=green>$name</>");
 
-        if($this->checkForExistingMigration($name, true)) {
+        if ($this->checkForExistingMigration($name, true)) {
             return;
-        };
+        }
 
         file_put_contents($target, $content);
 
@@ -96,8 +100,9 @@ class MakeModelCommand extends Command
 
     protected function getStubPath(): string
     {
-        return __DIR__ . '/../../stubs/migrations/add_model_guard_to_some_table.stub';
+        return __DIR__.'/../../stubs/migrations/add_model_guard_to_some_table.stub';
     }
+
     protected function getStub(): string
     {
         return file_get_contents($this->getStubPath());
@@ -107,7 +112,7 @@ class MakeModelCommand extends Command
     {
         $this->model = search(
             'Which Model?',
-            fn(?string $search) => $this->getModelQuery($search)
+            fn (?string $search) => $this->getModelQuery($search)
         );
     }
 
@@ -116,7 +121,7 @@ class MakeModelCommand extends Command
         return collect(ModelRegistry::make()->getAll())
             ->when(
                 $search,
-                fn(Collection $models) => $models->filter(fn(string $model) => str($model)->contains($search, true))
+                fn (Collection $models) => $models->filter(fn (string $model) => str($model)->contains($search, true))
             )
             ->toArray();
     }
@@ -138,14 +143,15 @@ class MakeModelCommand extends Command
             'conditions',
         );
 
-        if($this->tableColumnExists($this->getTable(), $this->column)) {
+        if ($this->tableColumnExists($this->getTable(), $this->column)) {
             $this->error('Column already exists');
 
-            if(! $this->ask('Choose another column?')) {
+            if (! $this->ask('Choose another column?')) {
                 return false;
-            };
+            }
             $this->askForColumn();
         }
+
         return true;
     }
 }

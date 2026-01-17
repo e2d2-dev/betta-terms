@@ -16,7 +16,7 @@ class ConsentResource extends Resource
 {
     public static function getModel(): string
     {
-        return Terms::getModel('consent');
+        return Terms::getConsentModel();
     }
 
     protected static ?string $recordTitleAttribute = 'name';

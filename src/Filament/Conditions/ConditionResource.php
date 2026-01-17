@@ -20,7 +20,7 @@ class ConditionResource extends Resource
 {
     public static function getModel(): string
     {
-        return Terms::getModel('condition');
+        return Terms::getConditionModel();
     }
 
     public static function table(Table $table): Table

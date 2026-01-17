@@ -2,7 +2,6 @@
 
 namespace Betta\Terms\Filament\Conditions\Actions;
 
-use Betta\Terms\Filament\Conditions\ConditionResource;
 use Betta\Terms\Models\Condition;
 use Betta\Terms\Terms;
 use Filament\Actions\Action;

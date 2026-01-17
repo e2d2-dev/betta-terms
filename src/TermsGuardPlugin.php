@@ -41,9 +41,10 @@ class TermsGuardPlugin implements Plugin
         return $this;
     }
 
-    public function disableGuard(Closure | bool $condition): static
+    public function disableGuard(Closure|bool $condition): static
     {
         Terms::disableGuard($condition);
+
         return $this;
     }
 }

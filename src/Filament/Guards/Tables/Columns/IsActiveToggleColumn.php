@@ -29,8 +29,8 @@ class IsActiveToggleColumn extends ToggleColumn
 
         $this->tooltip(fn () => $this->hasActivePredecessor() ? __('betta-terms::info.mark_active.active_predecessor') : null);
 
-        $this->afterStateUpdated(function($record, $state) {
-            if($state and !$this->getConditionRecord()->hasValidSource()) {
+        $this->afterStateUpdated(function ($record, $state) {
+            if ($state and ! $this->getConditionRecord()->hasValidSource()) {
                 Notification::make()
                     ->warning()
                     ->title(__('betta-terms::notifications.source.no_data.title'))
@@ -39,8 +39,8 @@ class IsActiveToggleColumn extends ToggleColumn
             }
         });
 
-        $this->disabled(fn () => !$this->getConditionRecord()->hasValidSource());
+        $this->disabled(fn () => ! $this->getConditionRecord()->hasValidSource());
 
-        $this->tooltip(fn() => !$this->getConditionRecord()->hasValidSource() ? __('betta-terms::notifications.source.no_data.title') : null);
+        $this->tooltip(fn () => ! $this->getConditionRecord()->hasValidSource() ? __('betta-terms::notifications.source.no_data.title') : null);
     }
 }

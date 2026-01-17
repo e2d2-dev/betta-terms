@@ -7,8 +7,8 @@ use Closure;
 trait HasLayout
 {
     use HasDescription;
-    use HasLabel;
     use HasIcon;
+    use HasLabel;
 
     protected Closure|bool|null $asSection = null;
 

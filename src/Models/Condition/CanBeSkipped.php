@@ -6,8 +6,11 @@ trait CanBeSkipped
 {
     public function isSkippable(): bool
     {
-        $value = $this->pivot['is_skippable'] ?? false;
+        return $this->guardConfig->isSkippable();
+    }
 
-        return (bool) $value;
+    public function isRequired(): bool
+    {
+        return ! $this->guardConfig->isSkippable();
     }
 }

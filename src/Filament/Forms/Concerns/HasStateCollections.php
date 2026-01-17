@@ -2,28 +2,24 @@
 
 namespace Betta\Terms\Filament\Forms\Concerns;
 
-use Betta\Terms\Terms;
 use Illuminate\Support\Collection;
 
 trait HasStateCollections
 {
     protected function getStateCollection(): Collection
     {
-        return collect($this->getState())->map(function ($item) {
-            $model = Terms::getModel('condition');
-
-            return new $model($item);
-        });
+        return collect($this->getState());
     }
 
     protected function getUnAcceptedStateCollection(): Collection
     {
         return $this->getStateCollection()->filter(function ($condition) {
-            if ($condition->isSkippable()) {
+            if ($condition['is_skippable'] ?? false) {
                 return false;
             }
+            $accepted = $condition['accepted'] ?? false;
 
-            return ! $condition->isAccepted();
+            return ! $accepted;
         });
     }
 }

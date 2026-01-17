@@ -16,8 +16,6 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GuardResource extends Resource
 {
@@ -51,15 +49,7 @@ class GuardResource extends Resource
 
     public static function getModel(): string
     {
-        return Terms::getModel('guard');
-    }
-
-    public static function getRecordRouteBindingEloquentQuery(): Builder
-    {
-        return parent::getRecordRouteBindingEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+        return Terms::getGuardModel();
     }
 
     public static function getModelLabel(): string

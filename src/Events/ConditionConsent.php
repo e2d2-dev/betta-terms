@@ -12,7 +12,7 @@ class ConditionConsent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * @param Consent $consent
+     * @param  Consent  $consent
      */
     public function __construct($consent)
     {

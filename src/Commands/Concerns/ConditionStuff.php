@@ -10,7 +10,7 @@ trait ConditionStuff
 {
     protected function createConditionRecord(string $name, ?string $description, string $source, bool $verbose = true): Condition
     {
-        $record = Terms::getModel('condition')::create([
+        $record = Terms::getConditionModel()::create([
             'name' => $name,
             'description' => $description,
             'source' => Source::tryFrom($source),

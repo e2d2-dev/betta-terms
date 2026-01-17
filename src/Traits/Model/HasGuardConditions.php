@@ -3,7 +3,7 @@
 namespace Betta\Terms\Traits\Model;
 
 use Betta\Terms\Actions\Model\CommitConsent;
-use Betta\Terms\Actions\Model\UpdateConsentGuardConditions;
+use Betta\Terms\Contracts\ModelConditions;
 use Betta\Terms\Models\Guard;
 use Betta\Terms\Relations\HasModelGuard;
 use Betta\Terms\Relations\ManyModelConditions;
@@ -20,7 +20,10 @@ trait HasGuardConditions
     use ModelConditionsRelation;
     use ModelGuardRelation;
 
-    abstract public function guardConditionsAttribute(): string;
+    public function guardConditionsAttribute(): string
+    {
+        return 'conditions';
+    }
 
     protected function initializeHasGuardConditions(): void
     {
@@ -35,12 +38,12 @@ trait HasGuardConditions
 
     protected static function bootHasGuardConditions(): void
     {
-        static::created(function ($model) {
-            $model->performCommitConsent();
+        static::created(function (ModelConditions $model) {
+            $model->commitConsent();
         });
 
-        static::updated(function ($model) {
-            $model->performCommitConsent();
+        static::updated(function (ModelConditions $model) {
+            $model->commitConsent();
         });
     }
 
@@ -57,13 +60,15 @@ trait HasGuardConditions
     public function getSavedGuardConditions(?string $key = null): array
     {
         $data = $this->{$this->guardConditionsAttribute()} ?? [];
+
         return $key ? $data[$key] ?? [] : $data;
     }
 
-    public function performCommitConsent(): void
+    public function commitConsent(): void
     {
         if (! empty($this->getSavedGuardConditions('consent')) and $this->commitConsentWhen()) {
-            CommitConsent::run($this);
+            $action = app(CommitConsent::class);
+            $action->handle($this);
         }
     }
 

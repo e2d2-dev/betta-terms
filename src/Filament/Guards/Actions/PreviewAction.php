@@ -46,12 +46,12 @@ class PreviewAction extends Action
             EmptyState::make(__('betta-terms::models.condition.not_attached'))
                 ->iconColor('warning')
                 ->icon(Heroicon::ExclamationTriangle)
-                ->visible(fn ($record) => $record->activeConditions()->count() === 0 and $record->conditions()->count() === 0),
+                ->visible(fn (Guard $record) => $record->activeConditions()->count() === 0 and $record->conditions()->count() === 0),
 
             EmptyState::make(__('betta-terms::models.condition.none_active'))
                 ->iconColor('warning')
                 ->icon(Heroicon::ExclamationTriangle)
-                ->visible(fn ($record) => $record->activeConditions()->count() === 0 and $record->conditions()->count() > 0),
+                ->visible(fn (Guard $record) => $record->activeConditions()->count() === 0 and $record->conditions()->count() > 0),
 
             Group::make([
                 Toggle::make('compact')

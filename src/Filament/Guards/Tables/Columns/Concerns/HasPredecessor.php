@@ -24,7 +24,7 @@ trait HasPredecessor
     {
         $record = $this->getRecord();
 
-        if($record instanceof Condition) {
+        if ($record instanceof Condition) {
             return $record;
         }
 

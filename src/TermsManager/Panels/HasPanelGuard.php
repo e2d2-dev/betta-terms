@@ -12,7 +12,6 @@ trait HasPanelGuard
     {
         $panel = $panel ?: $this->getCurrentPanelId();
 
-
         return $this->panelGuard = Guard::byPanel($panel);
     }
 

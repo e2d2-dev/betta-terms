@@ -8,7 +8,7 @@ return [
         'condition' => 'term_conditions',
         'guard' => 'term_guards',
         'consent' => 'term_consent',
-        'condition_guard_pivot' => 'term_condition_guard',
+        'condition_guard_config' => 'term_condition_guard',
     ],
     'page' => [
         'consent_conditions' => [

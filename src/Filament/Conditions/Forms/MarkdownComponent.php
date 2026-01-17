@@ -25,7 +25,7 @@ class MarkdownComponent extends MarkdownEditor
 
         $this->hiddenLabel();
 
-        $this->visible(fn($get) => $get('source') === Source::Markdown and !$get('has_file'));
+        $this->visible(fn ($get) => $get('source') === Source::Markdown and ! $get('has_file'));
 
         $this->validationMessages(
             __('betta-terms::fields.text.validation'),

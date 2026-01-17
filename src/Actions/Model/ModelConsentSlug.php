@@ -2,7 +2,6 @@
 
 namespace Betta\Terms\Actions\Model;
 
-
 use Betta\Terms\Contracts\ModelConditions;
 
 class ModelConsentSlug

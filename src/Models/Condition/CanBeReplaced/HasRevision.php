@@ -41,7 +41,7 @@ trait HasRevision
     {
         return $this->hasPredecessor()
             ? $this->getFreshRevisionNumber()
-            : 2;
+            : 1;
     }
 
     public function getFreshRevisionNumber(): int

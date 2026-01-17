@@ -2,14 +2,9 @@
 
 namespace Betta\Terms\Filament\Forms;
 
-use Betta\Terms\Enums\Source;
 use Betta\Terms\Filament\Forms\AcceptedCheckBox\HasInfoAction;
-use Betta\Terms\Filament\Forms\Actions\EmbedAction;
-use Betta\Terms\Filament\Forms\Actions\TextAction;
-use Betta\Terms\Filament\Forms\Actions\UrlAction;
 use Betta\Terms\Filament\Forms\Concerns\CanHaveConditionFromState;
 use Closure;
-use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,7 +30,7 @@ class AcceptedCheckbox extends Checkbox
 
         $this->label(fn () => $this->getConditionLabel());
 
-        $this->required(fn () => ! $this->getConditionRecord()->isSkippable());
+        $this->required(fn () => $this->getConditionRecord()->isRequired());
 
         $this->validationMessages(
             __('betta-terms::fields.term.validation')

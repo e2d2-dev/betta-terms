@@ -86,6 +86,7 @@ This will publish migrations, ask to publish the config file and translations
 
 ## 3. Setup User Model
 To perform consent on conditions add the `HasConsents` trait to your auth provider model:
+
    ```php
    use Betta\Terms\Traits\User\HasConsents;
 
@@ -534,6 +535,16 @@ or via the service provider:
     php artisan vendor:publish --provider="Betta\Terms\ServiceProvider" --tag=views
 
 ```
+
+# Screenshots
+![Condition Edit](docs/condition-edit.png)
+![Consent Conditions Page](docs/consent-conditions.png)
+![Consents Table](docs/consents-list.png)
+![Guards Table](docs/guards-list.png)
+![Guard Edit](docs/guard-edit.png)
+![Preview Compact](docs/preview-compact.png)
+![Preview Regular](docs/preview-regular.png)
+![Reorder](docs/reorder.png)
 
 # TODO
 - Disabling Sources & Components

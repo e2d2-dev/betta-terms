@@ -42,6 +42,7 @@ trait HasValidationException
     protected function throwFullValidationException(): void
     {
         $statePath = $this->getStatePath();
+
         $unAccepted = $this->getUnAcceptedStateCollection()
             ->keys()
             ->mapWithKeys(fn ($key) => ["{$statePath}.{$key}.accepted" => __('betta-terms::fields.term.validation.required')])

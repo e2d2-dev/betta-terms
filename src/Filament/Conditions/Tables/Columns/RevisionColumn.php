@@ -16,9 +16,9 @@ class RevisionColumn extends TextColumn
     {
         parent::setUp();
 
-        $this->formatStateUsing(fn($state) => $state === 1 ? __('betta-terms::entities.first.singular') : $state);
+        $this->formatStateUsing(fn ($state) => $state === 1 ? __('betta-terms::entities.first.singular') : $state);
 
-        $this->icon(fn($state) => $state === 1 ? null : Heroicon::Hashtag);
+        $this->icon(fn ($state) => $state === 1 ? null : Heroicon::Hashtag);
 
         $this->label(__('betta-terms::entities.revision.singular'));
     }

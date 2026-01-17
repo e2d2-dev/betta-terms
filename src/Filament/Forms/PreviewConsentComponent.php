@@ -39,6 +39,6 @@ class PreviewConsentComponent extends Repeater
 
     protected function getConditions(): array
     {
-        return $this->getRecord()->conditions()->distinct()->get()->toArray();
+        return $this->getRecord()->activeConditions()->distinct()->get()->toArray();
     }
 }

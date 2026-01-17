@@ -3,7 +3,6 @@
 namespace Betta\Terms\Filament\Guards\Tables\Columns;
 
 use Betta\Terms\Filament\Guards\Tables\Columns\Concerns\HasPredecessor;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\ToggleColumn;
 
 class IsSkippableToggleColumn extends ToggleColumn

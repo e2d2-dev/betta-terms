@@ -8,8 +8,8 @@ use Betta\Terms\Enums\GuardType;
 use Betta\Terms\ModelRegistry;
 use Betta\Terms\Terms;
 use Illuminate\Console\Command;
-
 use Illuminate\Database\Eloquent\Model;
+
 use function Laravel\Prompts\select;
 
 class MakeGuardCommand extends Command
@@ -24,17 +24,20 @@ class MakeGuardCommand extends Command
     protected $signature = 'make:terms-guard {name?} {--model=}';
 
     protected ?string $type = null;
+
     protected string $guardName;
 
     protected ?string $slug = null;
-    protected ?string $panel = null;
-    protected ?string $model = null;
-    protected null | Model $guard = null;
 
+    protected ?string $panel = null;
+
+    protected ?string $model = null;
+
+    protected ?Model $guard = null;
 
     public function handle(): int
     {
-        if(! $this->option('model')) {
+        if (! $this->option('model')) {
             $this->line('<fg=magenta>[</> Betta Terms make-guard <fg=magenta>]</>');
 
             $this->askForType();
@@ -46,11 +49,12 @@ class MakeGuardCommand extends Command
 
         $this->setSlug();
 
-        if($this->guardExists($this->slug, true)) {
-            if($this->shouldRestart()) {
+        if ($this->guardExists($this->slug, true)) {
+            if ($this->shouldRestart()) {
                 $this->slug = null;
                 $this->handle();
             }
+
             return static::FAILURE;
         }
         $this->askForGuardName();
@@ -62,24 +66,26 @@ class MakeGuardCommand extends Command
 
     protected function askForGuardName(): void
     {
-        if($this->type !== 'custom') return;
+        if ($this->type !== 'custom') {
+            return;
+        }
 
         $this->guardName = $this->ask('What should be the name of the guard?');
     }
 
     protected function setSlug(): void
     {
-        if($this->type === 'custom') {
+        if ($this->type === 'custom') {
             $choice = $this->ask('What should be the slug?');
-            $this->slug = str($choice)->slug()->toString();;
+            $this->slug = str($choice)->slug()->toString();
         }
 
-        if($this->getModel() || $this->type === 'model') {
+        if ($this->getModel() || $this->type === 'model') {
             $this->slug = Terms::getModelSlug($this->getModel());
             $this->type = 'model';
         }
 
-        if($this->panel || $this->type === 'panel') {
+        if ($this->panel || $this->type === 'panel') {
             $this->slug = Terms::getPanelSlug($this->panel);
         }
         $this->info("<fg=magenta>Slug: </>{$this->slug}");
@@ -100,29 +106,33 @@ class MakeGuardCommand extends Command
 
     protected function askForPanel(): void
     {
-        if($this->type !== 'panel') return;
+        if ($this->type !== 'panel') {
+            return;
+        }
 
         $this->panel = select('Which Panel?', Terms::listPanels());
 
-        if($this->guardExists(Terms::getPanelSlug($this->panel), true)) {
-            if(! $this->shouldRestart()) {
+        if ($this->guardExists(Terms::getPanelSlug($this->panel), true)) {
+            if (! $this->shouldRestart()) {
                 return;
-            };
-        };
+            }
+        }
         $this->createGuard();
     }
 
     protected function askForModel(): void
     {
-        if($this->type !== 'model') return;
+        if ($this->type !== 'model') {
+            return;
+        }
 
         $this->model = select('Which Model?', ModelRegistry::make()->getAll());
 
-        if($this->guardExists(Terms::getModelSlug($this->model), true)) {
-            if(! $this->shouldRestart()) {
+        if ($this->guardExists(Terms::getModelSlug($this->model), true)) {
+            if (! $this->shouldRestart()) {
                 return;
-            };
-        };
+            }
+        }
     }
 
     protected function createGuard(): void
@@ -141,13 +151,13 @@ class MakeGuardCommand extends Command
 
         $this->guard = $this->createGuardRecord($name, $slug);
 
-        if($this->guard->wasRecentlyCreated) {
+        if ($this->guard->wasRecentlyCreated) {
             $this->line('Guard created <fg=green>successfully</>!');
         }
 
-        if($this->ask('Do you want to create a condition?', true)){
+        if ($this->ask('Do you want to create a condition?', true)) {
             $this->runCommand('make:terms-condition', [
-                '--guard' => $this->guard->slug
+                '--guard' => $this->guard->slug,
             ], $this->output);
         }
     }

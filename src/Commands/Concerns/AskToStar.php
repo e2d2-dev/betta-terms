@@ -16,6 +16,6 @@ trait AskToStar
             return;
         }
 
-        $this->openUrlInBrowser('https://github.com/e2d2-dev/betta-onboarding');
+        $this->openUrlInBrowser('https://github.com/e2d2-dev/betta-terms');
     }
 }

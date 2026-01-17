@@ -2,6 +2,7 @@
 
 namespace Betta\Terms\Filament\Forms;
 
+use Betta\Terms\Contracts\CanConsent;
 use Betta\Terms\Filament\Forms\Concerns\HasExcludes;
 use Betta\Terms\Filament\Forms\Concerns\HasGuard;
 use Betta\Terms\Filament\Forms\Concerns\HasOnly;
@@ -12,9 +13,9 @@ use Betta\Terms\Filament\Forms\Concerns\HasValidationException;
 use Betta\Terms\Filament\Forms\Consent\HasConsentRelation;
 use Betta\Terms\Filament\Forms\Consent\HasGuardConditions;
 use Betta\Terms\Filament\Forms\Consent\HasModelConditions;
+use Betta\Terms\Models\Condition;
 use Betta\Terms\Terms;
 use Filament\Forms\Components\Repeater;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class ConsentPicker extends Repeater
@@ -58,9 +59,9 @@ class ConsentPicker extends Repeater
 
         $this->reorderable(false);
 
-        $this->default(fn () => $this->getGuardConditions());
+        $this->default(fn () => $this->fillGuardConditions());
 
-        $this->formatStateUsing(fn () => $this->getGuardConditions());
+        $this->formatStateUsing(fn () => $this->fillGuardConditions());
 
         $this->relationship(
             name: fn () => $this->getConsentRelationName()
@@ -68,7 +69,10 @@ class ConsentPicker extends Repeater
 
         $this->loadStateFromRelationshipsUsing(function () {
             return $this->state(
-                array_map(fn ($condition) => array_merge($condition, $this->getConsentedState($condition)), $this->getGuardConditions()));
+                $this->getGuardConditions()
+                    ->map(fn (Condition $condition) => $this->getModelConsentedState($condition))
+                    ->toArray()
+            );
         });
 
         $this->saveRelationshipsUsing(function () {
@@ -80,11 +84,17 @@ class ConsentPicker extends Repeater
                 return;
             }
             $user = $this->getUser();
+            $conditions = $this->getGuardConditions();
 
-            $this->getStateCollection()->each(function ($condition) use ($user) {
-                if ($condition->isAccepted()) {
-                    $user->consentBySlug($condition->slug, $this->getSignedOnSlug());
+            $this->getStateCollection()->each(function ($consent) use ($user, $conditions) {
+                /** @var Condition $condition */
+                $condition = $conditions->first(fn (Condition $condition) => $condition->slug === $consent['slug']);
+                $accepted = $consent['accepted'] ?? false;
+
+                if (! $accepted) {
+                    return;
                 }
+                $user->consentCondition($condition, $this->getSignedOnSlug());
             });
         });
 
@@ -94,16 +104,22 @@ class ConsentPicker extends Repeater
         );
     }
 
-    protected function getUser(): Model
+    protected function getUser(): CanConsent
     {
         $user = auth()->user();
 
         if (! $user) {
-            $email = $this->getLivewire()->data['email'] ?? null;
-            throw_if(! $email, 'User could not be extracted from form');
-            $user = Terms::getModel('user')::where('email', $email)->first();
+            $user = $this->extractUserFromLivewire();
         }
 
         return $user;
+    }
+
+    protected function extractUserFromLivewire(): ?Model
+    {
+        $email = $this->getLivewire()->data['email'] ?? null;
+        throw_if(! $email, 'User could not be extracted from form');
+
+        return Terms::getUserModel()::query()->where('email', $email)->first();
     }
 }

@@ -9,25 +9,36 @@ use Illuminate\Database\Eloquent\Model;
 
 trait CanHaveConditionFromState
 {
-    protected function getConditionFromState(): Model
+    protected function getConditionFromState(): Condition
+    {
+        $state = $this->getConditionStateFromRepeater();
+
+        return is_array($state)
+            ? $this->hydrateConditionFromState($state)
+            : $state;
+    }
+
+    private function getConditionStateFromRepeater(): array|Condition
     {
         $repeaterState = $this->getParentRepeater()->getState();
+
         $keys = array_keys($repeaterState);
         $idx = $this->getParentRepeaterItemIndex();
 
         $key = $keys[$idx];
 
-        $state = $repeaterState[$key];
-
-        $model = Terms::getModel('condition');
-
-        return new $model($state);
+        return $repeaterState[$key];
     }
 
-    /**
-     * @return Condition
-     */
-    protected function getConditionRecord(): Model
+    private function hydrateConditionFromState(array $state): Condition
+    {
+        $condition = Terms::getConditionModel()::fromArray($state);
+        $config = Terms::getConditionGuardModel()::fromArray($state['guard_config']);
+
+        return $condition->setRelation('guardConfig', $config);
+    }
+
+    protected function getConditionRecord(): Condition
     {
         return $this->condition ??= $this->getConditionFromState();
     }
@@ -40,7 +51,7 @@ trait CanHaveConditionFromState
             return $recordDescription;
         }
 
-        return in_array($this->getConditionSourceValue(), ['simple', 'link']) ? $recordDescription : null;
+        return in_array($this->getConditionSource(), [Source::Simple, Source::Link]) ? $recordDescription : null;
     }
 
     public function getConditionName(): ?string
@@ -48,19 +59,14 @@ trait CanHaveConditionFromState
         return $this->getConditionRecord()->name;
     }
 
-    public function getConditionSourceValue(): ?string
-    {
-        return $this->getConditionSource()->value;
-    }
-
-    public function getConditionSource(): Source
+    public function getConditionSource(): ?Source
     {
         return $this->getConditionRecord()->source;
     }
 
     public function getRecord(bool $withContainerRecord = true): Model|array|null
     {
-        $model = Terms::getModel('condition');
+        $model = Terms::getConditionModel();
 
         $record = parent::getRecord($withContainerRecord);
 

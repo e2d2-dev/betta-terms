@@ -44,16 +44,20 @@ trait HasPanels
         $guard = $this->getPanelGuard();
 
         if (! $guard) {
+            $this->panelSessionComplete();
+
             return false;
         }
 
-        $active = $guard->authHasOpenConsents();
+        $mustConsent = $guard->authHasOpenConsents();
 
-        if ($active) {
+        if ($mustConsent) {
             $this->sessionGuard($guard->slug);
+        } else {
+            $this->panelSessionComplete();
         }
 
-        return $active;
+        return $mustConsent;
     }
 
     public function listPanels(): Collection

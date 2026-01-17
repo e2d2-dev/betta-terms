@@ -15,7 +15,7 @@ trait MigrationStuff
         return date('Y_m_d_His_').$filename;
     }
 
-    protected function getMigrationStubPath(?string $filename): string
+    protected function getMigrationStubPath(?string $filename = null): string
     {
         return implode(DIRECTORY_SEPARATOR, array_filter([
             __DIR__.'/../../../stubs/migrations',
@@ -25,6 +25,10 @@ trait MigrationStuff
 
     protected function getMigrationStoragePath(?string $filename, bool $timestamp = false): string
     {
+        if (str($filename)->endsWith('.stub')) {
+            $filename = str($filename)->basename('.stub')->append('.php')->toString();
+        }
+
         $filename = $timestamp ? $this->prefixMigrationTimeStamp($filename) : null;
 
         return database_path(implode(DIRECTORY_SEPARATOR, [
@@ -38,13 +42,13 @@ trait MigrationStuff
         return $this->getMigrationStoragePath($name, true);
     }
 
-    protected function checkForExistingMigration($name, bool $exitWarning = false): bool
+    protected function checkForExistingMigration(string $name, bool $exitWarning = false): bool
     {
         $exists = collect(File::files(database_path('migrations')))
-            ->filter(fn(SplFileInfo $file) => str($file->getFilename())->contains($name))
+            ->filter(fn (SplFileInfo $file) => str($file->getFilename())->contains($name))
             ->isNotEmpty();
 
-        if($exists) {
+        if ($exists) {
             $this->line('Similar migration <fg=red>already</> exists!');
             $this->line('   -> Migration <fg=red>not</> created...');
         }

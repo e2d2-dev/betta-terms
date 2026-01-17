@@ -26,7 +26,7 @@ class ConditionSection extends Section
         $this->visible(fn () => ! in_array($this->getConditionSource(), [Source::Simple, Source::Link]));
 
         $this->description(fn () => implode(' | ', array_filter([
-            $this->getConditionRecord()->created_at->toFormattedDateString(),
+            $this->getConditionRecord()->created_at?->toFormattedDateString(),
             $this->getConditionDescription(),
         ])));
 

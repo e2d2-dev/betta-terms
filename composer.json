@@ -15,7 +15,7 @@
     "license": "MIT",
     "version": "1.0",
     "require": {
-        "filament/filament": "4.*",
+        "filament/filament": "5.*",
         "lorisleiva/laravel-actions": "2.*"
     },
     "autoload": {

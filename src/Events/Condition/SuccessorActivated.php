@@ -12,7 +12,7 @@ class SuccessorActivated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * @param Condition $condition
+     * @param  Condition  $condition
      */
     public function __construct($condition)
     {

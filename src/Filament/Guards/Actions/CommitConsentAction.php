@@ -23,14 +23,14 @@ class CommitConsentAction extends Action
 
         $this->successNotificationTitle(__('betta-terms::actions.commit_consent.notification.success'));
 
-        $this->disabled(fn() => $this->hasCommittedConsent());
+        $this->disabled(fn () => $this->hasCommittedConsent());
 
-        $this->tooltip(fn() => $this->hasCommittedConsent() ? __('betta-terms::actions.commit_consent.notification.committed') : null);
+        $this->tooltip(fn () => $this->hasCommittedConsent() ? __('betta-terms::actions.commit_consent.notification.committed') : null);
 
-        $this->color(fn() => $this->hasCommittedConsent() ? 'gray' : 'success');
+        $this->color(fn () => $this->hasCommittedConsent() ? 'gray' : 'success');
 
         $this->action(function () {
-            $this->getRecord()->performCommitConsent();
+            $this->getRecord()->commitConsent();
             $this->success();
         });
     }

@@ -13,31 +13,32 @@ trait HasModelConditions
 
     protected function saveModelConditions(): void
     {
-        $conditions = $this->getStateCollection()->map(function (Condition $condition) {
-            return $condition->slug;
+        $conditions = $this->getStateCollection()->map(function (array $condition) {
+            return $condition['slug'];
         })->values()->toArray();
 
         UpdateConsentGuardConditions::run($this->getRecord(), $conditions);
     }
 
-    protected function getConsentedState($condition): array
+    protected function getModelConsentedState(Condition $condition): Condition
     {
         $accepted = false;
         $disabled = false;
-        $recordState = $this->getRecordConditionState();
+        $state = $this->getModelConditionState();
 
         if ($this->implementsGuardConditions()) {
-            $accepted = in_array($condition['slug'], Arr::flatten($recordState));
-            $disabled = in_array($condition['slug'], $recordState['committed'] ?? []);
+            $slug = $condition->slug;
+            $accepted = in_array($slug, Arr::flatten($state));
+            $disabled = in_array($slug, $state['committed'] ?? []);
         }
 
-        return [
-            'accepted' => $accepted,
-            'disabled' => $disabled,
-        ];
+        $condition->accepted = $accepted;
+        $condition->disabled = $disabled;
+
+        return $condition;
     }
 
-    protected function getRecordConditionState(): array
+    protected function getModelConditionState(): array
     {
         /** @var ModelConditions $record */
         $record = $this->getRecord();

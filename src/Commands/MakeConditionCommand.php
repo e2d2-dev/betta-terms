@@ -27,11 +27,14 @@ class MakeConditionCommand extends Command
     protected $signature = 'make:terms-condition {name?} {--guard=}';
 
     protected string $source;
-    protected string $conditionName;
-    protected null | Guard $guard = null;
-    protected null | string $conditionDescription;
-    protected null | Condition $condition = null;
 
+    protected string $conditionName;
+
+    protected ?Guard $guard = null;
+
+    protected ?string $conditionDescription;
+
+    protected ?Condition $condition = null;
 
     public function handle(): int
     {
@@ -58,38 +61,42 @@ class MakeConditionCommand extends Command
     {
         $this->condition = $this->createConditionRecord($this->conditionName, $this->conditionDescription, $this->source);
     }
+
     protected function resourceInfo(): void
     {
         $this->line('You <fg=red>still need to</> add content to the condition. This is <fg=green>available</> through the management resources');
 
-        if(!$this->getConditionResourceUrl()) {
+        if (! $this->getConditionResourceUrl()) {
             $this->error('The ConditionResource is <fg=red>>not</> registered!');
             $this->newLine();
             $this->line('Add the <fg=green>ManageTermsPlugin</> to your panel...');
+
             return;
         }
 
         $url = $this->getConditionResourceUrl();
         $this->line("url: {$url}");
 
-        if($this->ask('Should we open the resource now?', true)) {
+        if ($this->ask('Should we open the resource now?', true)) {
             $this->openUrlInBrowser($url);
         }
     }
 
     protected function getConditionResourceUrl(): ?string
     {
-        /** @var ?Resource $class */
-        $class = filament()->getModelResource(Terms::getModel('condition'));
+        /** @var ?resource $class */
+        $class = filament()->getModelResource(Terms::getConditionModel());
 
-        if(! $class) return null;
+        if (! $class) {
+            return null;
+        }
 
         return $class::getUrl('edit', ['record' => $this->condition]);
     }
 
     protected function attachGuard(): void
     {
-        if($this->guard !== null) {
+        if ($this->guard !== null) {
             $this->condition->guards()->attach([$this->guard->getKey()]);
 
             $name = $this->guard->name;
@@ -115,20 +122,19 @@ class MakeConditionCommand extends Command
         $this->source = select('Whats should be the source?', $options);
     }
 
-
     protected function askToCreateGuard(): void
     {
         $slug = $this->option('guard');
 
         $guard = $slug ? $this->getGuard($slug) : null;
 
-        if($slug and !$guard) {
+        if ($slug and ! $guard) {
             $this->info("... Guard does not exist: {$guard->name} ...");
         }
-        if(!$guard) {
+        if (! $guard) {
             $guard = select('For which Guard?', ['none' => 'None yet', ...Terms::getGuardList()]);
         }
-        if($guard === 'none') {
+        if ($guard === 'none') {
             return;
         }
 
@@ -139,6 +145,7 @@ class MakeConditionCommand extends Command
     protected function getGuard(?string $slug = null): ?Guard
     {
         $slug = $slug ?? $this->option('guard');
-        return Terms::getModel('guard')::bySlug($slug);
+
+        return Terms::getGuardModel()::bySlug($slug);
     }
 }

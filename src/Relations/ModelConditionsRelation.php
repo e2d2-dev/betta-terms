@@ -8,7 +8,7 @@ trait ModelConditionsRelation
 {
     public function manyModelConditions(): ManyModelConditions
     {
-        $instance = $this->newRelatedInstance(Terms::getModel('condition'));
+        $instance = $this->newRelatedInstance(Terms::getConditionModel());
 
         $query = $instance->newQuery();
 

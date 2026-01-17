@@ -21,7 +21,7 @@ trait HasConsents
 
     public function consents(): BelongsToMany
     {
-        return $this->belongsToMany(Terms::getModel('user'), Terms::getTable('consent'))
+        return $this->belongsToMany(Terms::getUserModel(), Terms::getTable('consent'))
             ->withTimestamps(updatedAt: false);
     }
 

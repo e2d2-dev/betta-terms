@@ -13,6 +13,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('condition_id');
             $table->string('signed_on')->nullable();
+            $table->boolean('is_repeating')->nullable();
             $table->timestamp('created_at')->nullable();
         });
     }

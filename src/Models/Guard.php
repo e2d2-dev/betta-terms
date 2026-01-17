@@ -10,6 +10,9 @@ use Betta\Terms\Models\Guard\HasSlug;
 use Betta\Terms\Terms;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ */
 class Guard extends Model
 {
     use HasConditions;
@@ -27,9 +30,11 @@ class Guard extends Model
     {
         $user = auth()->user();
 
-        if(!$user) return false;
+        if (! $user) {
+            return false;
+        }
 
-        $consented = $user->consents->pluck('id');
+        $consented = $user->consents()->pluck('condition_id');
 
         return $this->activeConditions()->whereNotIn('id', $consented)->count() > 0;
     }

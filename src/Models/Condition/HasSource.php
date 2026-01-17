@@ -101,7 +101,7 @@ trait HasSource
 
     public function hasMarkdown(): bool
     {
-        return $this->source === Source::Markdown and (!empty($this->data) or $this->hasFile());
+        return $this->source === Source::Markdown and (! empty($this->data) or $this->hasFile());
     }
 
     public function getMarkdown()

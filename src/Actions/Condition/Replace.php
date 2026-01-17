@@ -13,7 +13,7 @@ class Replace
     public function handle(Condition $condition): Condition
     {
         /** @var Condition $fresh */
-        $fresh = Terms::getModel('condition')::create([
+        $fresh = Terms::getConditionModel()::create([
             'name' => $condition->name,
             'description' => $condition->description,
         ]);

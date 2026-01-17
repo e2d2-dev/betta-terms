@@ -3,6 +3,7 @@
 namespace Betta\Terms\Models;
 
 use Betta\Terms\Models\Condition\CanBeDeleted;
+use Betta\Terms\Models\Condition\CanBePersistent;
 use Betta\Terms\Models\Condition\CanBeReplaced;
 use Betta\Terms\Models\Condition\CanBeSkipped;
 use Betta\Terms\Models\Condition\CanBeUsable;
@@ -11,8 +12,8 @@ use Betta\Terms\Models\Condition\HasGuards;
 use Betta\Terms\Models\Condition\HasSlug;
 use Betta\Terms\Models\Condition\HasSource;
 use Betta\Terms\Terms;
+use Betta\Terms\Traits\FromArray;
 use Carbon\CarbonInterface;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,9 +26,11 @@ use Illuminate\Database\Eloquent\Model;
 class Condition extends Model
 {
     use CanBeDeleted;
+    use CanBePersistent;
     use CanBeReplaced;
     use CanBeSkipped;
     use CanBeUsable;
+    use FromArray;
     use HasConsents;
     use HasGuards;
     use HasSlug;
@@ -38,23 +41,14 @@ class Condition extends Model
         return Terms::getTable('condition');
     }
 
+    protected $fillable = [
+        'name',
+        'description',
+        'accepted',
+    ];
+
     protected $casts = [
         'name' => 'string',
         'description' => 'string',
     ];
-
-    public static function getPublicFillableAttributes(): array
-    {
-        return ['name', 'description', 'slug', 'source', 'text', 'url', 'file', 'has_file', 'created_at'];
-    }
-
-    public function isAccepted(): bool
-    {
-        return (bool) $this->accepted ?? false;
-    }
-
-    public function scopeGuard(Builder $query, ?Guard $guard): void
-    {
-        $query->whereRelation('guards', 'id', $guard?->getKey());
-    }
 }

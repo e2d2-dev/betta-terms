@@ -17,7 +17,7 @@ class ConsentComponent extends Group
             : [$this->getConsentPicker()]
         );
 
-        $this->visible(fn() => !empty($this->getChildComponents()));
+        $this->visible(fn () => ! empty($this->getChildComponents()));
     }
 
     protected function getConsentPicker(): ConsentPicker

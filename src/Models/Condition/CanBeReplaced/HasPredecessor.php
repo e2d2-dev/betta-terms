@@ -13,7 +13,7 @@ trait HasPredecessor
 {
     public function predecessor(): HasOne
     {
-        return $this->hasOne(Terms::getModel('condition'), 'successor_id', 'id');
+        return $this->hasOne(Terms::getConditionModel(), 'successor_id', 'id');
     }
 
     public function hasPredecessor(): bool

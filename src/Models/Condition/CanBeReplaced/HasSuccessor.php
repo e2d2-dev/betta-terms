@@ -12,6 +12,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 trait HasSuccessor
 {
+    protected function initializeHasSuccessor(): void
+    {
+        $this->mergeFillable([
+            'successor_id',
+        ]);
+    }
+
     public function activateSuccessor(): void
     {
         ActivateSuccessor::run($this);
@@ -24,7 +31,7 @@ trait HasSuccessor
 
     public function successor(): BelongsTo
     {
-        return $this->belongsTo(Terms::getModel('condition'), 'successor_id');
+        return $this->belongsTo(Terms::getConditionModel(), 'successor_id');
     }
 
     public function isSuccessor(): bool

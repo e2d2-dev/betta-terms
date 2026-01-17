@@ -8,7 +8,7 @@ trait ModelGuardRelation
 {
     public function hasModelGuard(): HasModelGuard
     {
-        $instance = $this->newRelatedInstance(Terms::getModel('guard'));
+        $instance = $this->newRelatedInstance(Terms::getGuardModel());
 
         $query = $instance->newQuery();
 

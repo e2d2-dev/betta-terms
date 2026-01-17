@@ -5,7 +5,6 @@ namespace Betta\Terms\Filament\Guards\Tables;
 use Betta\Terms\Filament\Guards\Tables\Columns\DisplayNameColumn;
 use Betta\Terms\Filament\Tables\Columns\CreatedColumn;
 use Betta\Terms\Terms;
-use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 

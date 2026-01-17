@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('term_condition_guard', function (Blueprint $table) {
             $table->foreignId('condition_id')->nullable();
             $table->foreignId('guard_id')->nullable();
+            $table->boolean('is_persistent')->default(false);
             $table->boolean('is_active')->default(false);
             $table->boolean('is_skippable')->default(false);
             $table->integer('order')->nullable();
+            $table->timestamps();
         });
     }
 

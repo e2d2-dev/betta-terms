@@ -39,7 +39,7 @@ trait HasGuard
             return $guard;
         }
 
-        return Terms::getModel('guard')::bySlug($guard);
+        return Terms::getGuardModel()::bySlug($guard);
     }
 
     protected function getApplicableGuard(): ?Guard
@@ -54,13 +54,13 @@ trait HasGuard
 
     protected function throwWhenConsentGuardIsNotBound(): ?Guard
     {
-        /** @var ModelConditions $record */
-        $record = $this->getRecord();
-        $guard = $record->consentGuard;
+        /** @var ModelConditions $model */
+        $model = $this->getModel();
+        $instance = new $model;
+        $guard = $instance->consentGuard;
 
         if (! $guard) {
-            $model = $this->getModel();
-            throw new \Exception("The Model $model implements GuardsConditions, however there is no guard specified for that model.");
+            throw new \Exception("The Model {$model} implements GuardsConditions, however there is no guard specified for that model.");
         }
 
         return $guard;

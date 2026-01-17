@@ -10,7 +10,6 @@ use Betta\Terms\Filament\Conditions\Forms\SourceComponent;
 use Betta\Terms\Filament\Conditions\Forms\TextComponent;
 use Betta\Terms\Filament\Conditions\Forms\UrlComponent;
 use Betta\Terms\Models\Condition;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Schemas\Components\Section;
 use Filament\Support\Icons\Heroicon;
 

@@ -6,7 +6,6 @@ use Betta\Terms\Filament\Forms\Fields\EmbedField;
 use Betta\Terms\Filament\Forms\Fields\MarkdownField;
 use Betta\Terms\Filament\Forms\Fields\TextField;
 use Betta\Terms\Models\Condition;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Support\Icons\Heroicon;
 
