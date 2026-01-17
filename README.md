@@ -1,5 +1,6 @@
-![](logo.png)
-# Terms & Conditions Management
+<p align="center">
+    <img src="logo.png" alt="Banner" style="width: 100%; max-width: 800px;" />
+</p># Terms & Conditions Management
 
 ### For Filament 4.x / 5.0
 
