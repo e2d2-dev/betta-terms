@@ -15,7 +15,7 @@
     "license": "MIT",
     "version": "1.0",
     "require": {
-        "filament/filament": "4.*, 5.1.*"
+        "filament/filament": "4.*|5.1.*"
     },
     "autoload": {
         "psr-4": {
