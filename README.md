@@ -140,7 +140,8 @@ Conditions can be:
 - skippable -> not required
 - persistent -> will need consent every time / multiple times 
 - orderable
-  ![Reorder](docs/reorder.png)
+
+![Reorder](docs/reorder.png)
 
 # Panel Guard
 Terms comes with a multi-panel guard. Each can have an own. 
