@@ -1,0 +1,35 @@
+{
+    "name": "e2d2-dev/betta-terms",
+    "description": "Comprehensive Terms Solution with panel/model and management solution",
+    "keywords": [
+        "laravel",
+        "filamentphp",
+        "terms",
+        "conditions",
+        "consents",
+        "model guard",
+        "model guard",
+        "e2d2-dev"
+    ],
+    "homepage": "https://github.com/e2d2-dev/betta-terms",
+    "license": "MIT",
+    "version": "1.0",
+    "require": {
+        "filament/filament": "4.*",
+        "lorisleiva/laravel-actions": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Betta\\Terms\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Betta\\Terms\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
