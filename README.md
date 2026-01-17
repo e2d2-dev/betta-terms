@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="logo.png" alt="Banner" style="width: 100%; max-width: 800px;" />
+    <img src="https://repository-images.githubusercontent.com/1136087779/249f084b-4c55-491e-81d4-c875adccb96c" alt="Banner" style="width: 100%; max-width: 800px;" />
 </p># Terms & Conditions Management
 
 ### For Filament 4.x / 5.0
