@@ -68,4 +68,7 @@ return [
         'label' => 'Compact',
         'view' => 'Compact version',
     ],
+    'persistent' => [
+        'label' => 'Persistent',
+    ],
 ];
