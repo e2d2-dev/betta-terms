@@ -84,12 +84,13 @@ Run the setup command
 This will publish migrations, ask to publish the config file and translations
 
 ## 3. Setup User Model
-To perform consent on conditions add the `HasConsents` trait to your auth provider model:
+To perform consent on conditions add the `HasConsents` trait & the `CanConsent` interface to your auth provider model:
 
    ```php
    use Betta\Terms\Traits\User\HasConsents;
-
-   class User extends Authenticatable
+   use \Betta\Terms\Contracts\CanConsent;
+   
+   class User extends Authenticatable implements CanConsent
    {
        use HasConsents;
    }

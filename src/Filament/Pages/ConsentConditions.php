@@ -30,7 +30,7 @@ class ConsentConditions extends Page implements HasActions, HasSchemas
 
     protected Width|string|null $maxContentWidth = '4xl';
 
-    protected static bool $shouldRegisterNavigation = true;
+    protected static bool $shouldRegisterNavigation = false;
 
     public function __construct()
     {

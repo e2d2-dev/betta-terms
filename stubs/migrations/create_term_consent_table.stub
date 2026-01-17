@@ -25,7 +25,8 @@ return new class extends Migration
 
     public function getUserKeyType(): string
     {
-        return match(\Betta\Terms\Terms::getUserModel()->getKeyType()) {
+        $model = \Betta\Terms\Terms::getUserModel();
+        return match((new $model)->getKeyType()) {
             'int' => 'unsignedBigInteger',
             'string' => 'string',
         };}
